@@ -27,12 +27,15 @@
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="wrap_content"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:orientation="vertical"
+        app:layout_constraintBottom_toTopOf="@+id/cardView"
         app:layout_constraintEnd_toStartOf="@+id/guideline4"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/guideline3"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.01999998"
+        app:layout_constraintVertical_chainStyle="packed">
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -43,27 +46,37 @@
                 android:id="@+id/locationIcon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="TextView" />
+                android:drawableRight="@drawable/marker_2" />
 
             <TextView
                 android:id="@+id/typeOfNews"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="TextView" />
+                android:paddingLeft="8dp"
+                android:text="@string/notizieTitle"
+                android:textColor="@color/white"
+                android:textSize="16sp" />
         </LinearLayout>
 
         <TextView
             android:id="@+id/location"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="TextView" />
+            android:text="Charlotte"
+            android:textColor="@color/white"
+            android:textSize="27dp"
+            android:textStyle="bold" />
 
     </LinearLayout>
 
     <androidx.cardview.widget.CardView
+        android:id="@+id/cardView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/guideline4"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="@+id/guideline3"
         app:layout_constraintTop_toBottomOf="@+id/linearLayout">
 
@@ -84,8 +97,13 @@
 
             <ImageView
                 android:id="@+id/imageView"
-                android:layout_width="60dp"
-                android:layout_height="62dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:adjustViewBounds="true"
+                android:maxWidth="30dp"
+                android:maxHeight="30dp"
                 android:scaleType="centerCrop"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toStartOf="@+id/linearLayout2"
@@ -93,7 +111,7 @@
                 app:layout_constraintHorizontal_chainStyle="packed"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
-                tools:src="@tools:sample/avatars" />
+                tools:src="@drawable/cloudy" />
 
             <LinearLayout
                 android:id="@+id/linearLayout2"
