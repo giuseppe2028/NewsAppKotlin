@@ -1,21 +1,26 @@
 package com.example.newsappkotlin.View.Network
 
+import com.example.newsappkotlin.View.Model.News
+import com.example.newsappkotlin.View.Model.NewsSet
+import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
 import retrofit2.http.Query
 
 val BASEURL = "https://newsapi.org/"
-val APIKEY = "ff1458b9ffdf49b4863451a7f8627695"
+const val APIKEY = "d5e9ca056c3a4f72bf30dfcc6e14f545"
 
 interface APINews {
 
-    @GET("v2/top-headlines?country=us&category=business&apiKey=ff1458b9ffdf49b4863451a7f8627695")
+    @GET("v2/top-headlines?country=us&category=business&apiKey=$APIKEY")
     //potrei anche aggiungere tutte le città, ma preferisco di no per ora
-    fun getHeadNews(@Query("country") country:String)
+    fun getHeadNews(@Query("country") country:String):Call<NewsSet>
 
-    @GET("v2/everything?from=2023-05-21&sortBy=publishedAt&apiKey=ff1458b9ffdf49b4863451a7f8627695")
-    fun getAllNews(@Query("q") argunent:String)
+   // @GET("v2/everything?apiKey=$APIKEY")
+    //fun getAllNews(@Query("q") argunent:String):Call<NewsSet>
+   @GET("v2/everything?q=tesla&from=2023-05-21&sortBy=publishedAt&apiKey=$APIKEY")
+   fun getAllNews() : Call<NewsSet>
 
 }
 

@@ -1,18 +1,23 @@
 package com.example.newsappkotlin.View.Fragments
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.newsappkotlin.R
+import com.example.newsappkotlin.View.Model.NewsSet
 import com.example.newsappkotlin.View.Network.ClientNetwork
 import com.example.newsappkotlin.databinding.FragmentHomeFragmentBinding
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
+
 
 /**
  * A simple [Fragment] subclass.
@@ -24,6 +29,7 @@ class Home_fragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
+    private var FRAGMENTLOG = "ciao"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,8 +53,25 @@ class Home_fragment : Fragment() {
 
     private fun setPage() {
         //make http request:
-        val news = ClientNetwork.retrofit.getAllNews("tesla")
-        news
+        val news = ClientNetwork.retrofit.getAllNews()
+        news.enqueue(
+            object:Callback<NewsSet>{
+                override fun onResponse(call: Call<NewsSet>, response: Response<NewsSet>) {
+                    val news = response.body()
+
+                        if (news != null) {
+                            for(i in news.listaArticles){
+                                Log.i("ciao","${i.title}")
+                            }
+                        }
+
+                }
+                override fun onFailure(call: Call<NewsSet>, t: Throwable) {
+                    Log.i("ciao","ciao2")
+                }
+
+            }
+        )
     }
 
     private fun showElement() {
