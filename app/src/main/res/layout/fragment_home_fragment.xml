@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/baseLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorsBackgroundHome"
@@ -62,33 +63,33 @@
                         android:layout_height="wrap_content"
                         android:adjustViewBounds="true"
                         android:scaleType="centerCrop"
+                        app:layout_constraintBottom_toTopOf="@id/newsTitle"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.0"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@+id/imageView3"
-                        tools:src="@tools:sample/backgrounds/scenic"
-                        app:layout_constraintBottom_toTopOf="@id/newsTitle"/>
+                        tools:src="@tools:sample/backgrounds/scenic" />
 
                     <TextView
                         android:id="@+id/newsTitle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="TextView"
+                        app:layout_constraintBottom_toTopOf="@id/divider"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintHorizontal_bias="0.0"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/imageJournal"
-                        app:layout_constraintBottom_toTopOf="@id/divider"/>
+                        app:layout_constraintTop_toBottomOf="@+id/imageJournal" />
 
                     <View
                         android:id="@+id/divider"
                         android:layout_width="match_parent"
                         android:layout_height="1dp"
                         android:background="?android:attr/listDivider"
+                        app:layout_constraintBottom_toTopOf="@id/publication"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintStart_toStartOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/newsTitle"
-                        app:layout_constraintBottom_toTopOf="@id/publication"/>
+                        app:layout_constraintTop_toBottomOf="@+id/newsTitle" />
 
                     <TextView
                         android:id="@+id/publication"

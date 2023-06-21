@@ -6,6 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.newsappkotlin.R
+import com.example.newsappkotlin.View.Network.ClientNetwork
+import com.example.newsappkotlin.databinding.FragmentHomeFragmentBinding
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -18,6 +20,7 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  */
 class Home_fragment : Fragment() {
+    private lateinit var binding: FragmentHomeFragmentBinding
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -33,9 +36,31 @@ class Home_fragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
+        binding = FragmentHomeFragmentBinding.inflate(layoutInflater)
+        hideElement()
+        setPage()
+        showElement()
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_home_fragment, container, false)
+        return binding.root
+    }
+
+    private fun setPage() {
+        //make http request:
+        val news = ClientNetwork.retrofit.getAllNews("tesla")
+        news
+    }
+
+    private fun showElement() {
+        binding.apply {
+            baseLayout.visibility = View.VISIBLE
+        }
+    }
+
+    private fun hideElement() {
+        binding.apply {
+            baseLayout.visibility = View.GONE
+        }
     }
 
     companion object {
