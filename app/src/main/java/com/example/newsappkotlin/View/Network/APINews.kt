@@ -19,7 +19,7 @@ interface APINews {
 
    // @GET("v2/everything?apiKey=$APIKEY")
     //fun getAllNews(@Query("q") argunent:String):Call<NewsSet>
-   @GET("v2/everything?q=tesla&from=2023-05-21&sortBy=publishedAt&apiKey=$APIKEY")
+   @GET("v2/everything?q=tesla&from=2023-06-21&sortBy=publishedAt&apiKey=$APIKEY")
    fun getAllNews() : Call<NewsSet>
 
 }

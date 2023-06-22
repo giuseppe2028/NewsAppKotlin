@@ -6,6 +6,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.newsappkotlin.View.Adapter.HomeNewsAdapter
 import com.example.newsappkotlin.View.Model.NewsSet
 import com.example.newsappkotlin.View.Network.ClientNetwork
 import com.example.newsappkotlin.databinding.FragmentHomeFragmentBinding
@@ -29,7 +31,6 @@ class Home_fragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
-    private var FRAGMENTLOG = "ciao"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,13 +59,15 @@ class Home_fragment : Fragment() {
             object:Callback<NewsSet>{
                 override fun onResponse(call: Call<NewsSet>, response: Response<NewsSet>) {
                     val news = response.body()
-
                         if (news != null) {
-                            for(i in news.listaArticles){
-                                Log.i("ciao","${i.title}")
+                            binding.apply {
+                                val adapter  = HomeNewsAdapter(requireContext())
+                                recyclerView.adapter = adapter
+                                adapter.lista = news.listaArticles
+                                recyclerView.layoutManager = LinearLayoutManager(requireContext())
                             }
+                            Log.i("ciao","${news.listaArticles.get(0).title}")
                         }
-
                 }
                 override fun onFailure(call: Call<NewsSet>, t: Throwable) {
                     Log.i("ciao","ciao2")
