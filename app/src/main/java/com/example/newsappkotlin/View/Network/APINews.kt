@@ -13,14 +13,14 @@ const val APIKEY = "d5e9ca056c3a4f72bf30dfcc6e14f545"
 
 interface APINews {
 
-    @GET("v2/top-headlines?country=us&category=business&apiKey=$APIKEY")
+    @GET("v2/top-headlines?category=business&apiKey=$APIKEY")
     //potrei anche aggiungere tutte le città, ma preferisco di no per ora
     fun getHeadNews(@Query("country") country:String):Call<NewsSet>
 
    // @GET("v2/everything?apiKey=$APIKEY")
     //fun getAllNews(@Query("q") argunent:String):Call<NewsSet>
-   @GET("v2/everything?q=tesla&from=2023-06-21&sortBy=publishedAt&apiKey=$APIKEY")
-   fun getAllNews() : Call<NewsSet>
+   @GET("v2/everything?from=2023-06-21&sortBy=publishedAt&apiKey=$APIKEY")
+   fun getAllNews(@Query("q") q:String) : Call<NewsSet>
 
 }
 

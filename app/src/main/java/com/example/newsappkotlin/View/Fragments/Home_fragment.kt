@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
 import com.example.newsappkotlin.View.Adapter.HomeNewsAdapter
 import com.example.newsappkotlin.View.Model.NewsSet
 import com.example.newsappkotlin.View.Network.ClientNetwork
@@ -47,14 +48,36 @@ class Home_fragment : Fragment() {
         binding = FragmentHomeFragmentBinding.inflate(layoutInflater)
         hideElement()
         setPage()
+        setCard()
         showElement()
         // Inflate the layout for this fragment
         return binding.root
     }
 
+    private fun setCard() {
+        ClientNetwork.retrofit.getHeadNews("us").enqueue(
+            object: Callback<NewsSet>{
+                override fun onResponse(call: Call<NewsSet>, response: Response<NewsSet>) {
+                    val news = response.body()
+                    if(news!=null){
+                        binding.apply {
+                            val item = news.listaArticles[0]
+                            Log.i("ciao","${item.urlToImage}")
+                            Glide.with(requireContext()).load(item.urlToImage).into(topImageView)
+                            newsTitle.text = item.title
+                        }
+                    }
+                }
+                override fun onFailure(call: Call<NewsSet>, t: Throwable) {
+                }
+
+            }
+        )
+    }
+
     private fun setPage() {
         //make http request:
-        val news = ClientNetwork.retrofit.getAllNews()
+        val news = ClientNetwork.retrofit.getAllNews("apple")
         news.enqueue(
             object:Callback<NewsSet>{
                 override fun onResponse(call: Call<NewsSet>, response: Response<NewsSet>) {
@@ -66,7 +89,6 @@ class Home_fragment : Fragment() {
                                 adapter.lista = news.listaArticles
                                 recyclerView.layoutManager = LinearLayoutManager(requireContext())
                             }
-                            Log.i("ciao","${news.listaArticles.get(0).title}")
                         }
                 }
                 override fun onFailure(call: Call<NewsSet>, t: Throwable) {
