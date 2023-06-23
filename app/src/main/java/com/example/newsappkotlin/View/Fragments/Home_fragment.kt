@@ -11,7 +11,10 @@ import com.bumptech.glide.Glide
 import com.example.newsappkotlin.View.Adapter.HomeNewsAdapter
 import com.example.newsappkotlin.View.Model.NewsSet
 import com.example.newsappkotlin.View.Network.ClientNetwork
+import com.example.newsappkotlin.View.Network.ClientWeather
 import com.example.newsappkotlin.databinding.FragmentHomeFragmentBinding
+import com.google.gson.JsonArray
+import com.google.gson.JsonObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -47,11 +50,62 @@ class Home_fragment : Fragment() {
     ): View {
         binding = FragmentHomeFragmentBinding.inflate(layoutInflater)
         hideElement()
-        setPage()
+        setWeather()
+        setRecyclerView()
         setCard()
         showElement()
         // Inflate the layout for this fragment
         return binding.root
+    }
+
+    private fun setWeather() {
+        //faccio la richiesta http al server del meteo
+        //TODO farlo con la posizione corrente
+        ClientWeather.retrofit.getWeather(38.1156879,13.3612671).enqueue(
+            object: Callback<JsonObject>{
+                override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {
+                    response.body().let {
+                        if (it!=null){
+                           showWeather(it)
+                        }
+                    }
+                }
+
+                private fun showWeather(jsonObject: JsonObject) {
+                    val locationRequest = jsonObject.get("location") as JsonObject
+                    val nomeCitta = locationRequest.get("city") //
+                    val previsioni = jsonObject.get("forecasts") as JsonArray
+                    //cerco di trovare il giorno corretto:
+                    //TODO farlo con il giorno corrente
+                    val listaFiltrata = previsioni.filter {
+                            jsonElement ->
+                        val elemento = jsonElement as JsonObject
+                        elemento.get("day").asString == "Fri"
+                    }
+                    //mostro il primo elemento che sono sicuro che sia quello corrente
+                    val elemento = listaFiltrata[0]
+                    binding.apply {
+                        //set location
+                        location.text = nomeCitta.asString
+                        val elemento = elemento as JsonObject
+                        weather.text = elemento.get("text").asString
+                        val high = elemento.get("high")
+                        val low = elemento.get("low")
+                        lowHighTemperature.text = "H:${high.asString}° L:${low.asString}°"
+                        //dovrei mostrare la temperatura corrente ma siccome l'api non lo consente allora faccio la media
+                        temperaturaattuale.text = ((high.asInt + low.asInt) / 2).toString()+"°"
+                    }
+
+
+                }
+
+                override fun onFailure(call: Call<JsonObject>, t: Throwable) {
+                    TODO("Not yet implemented")
+                }
+
+
+            }
+        )
     }
 
     private fun setCard() {
@@ -75,7 +129,7 @@ class Home_fragment : Fragment() {
         )
     }
 
-    private fun setPage() {
+    private fun setRecyclerView() {
         //make http request:
         val news = ClientNetwork.retrofit.getAllNews("apple")
         news.enqueue(
