@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
+import com.example.newsappkotlin.R
 import com.example.newsappkotlin.View.Adapter.HomeNewsAdapter
 import com.example.newsappkotlin.View.Model.NewsSet
 import com.example.newsappkotlin.View.Network.ClientNetwork
@@ -61,7 +62,7 @@ class Home_fragment : Fragment() {
     private fun setWeather() {
         //faccio la richiesta http al server del meteo
         //TODO farlo con la posizione corrente
-        ClientWeather.retrofit.getWeather(38.1156879,13.3612671).enqueue(
+        ClientWeather.retrofit.getWeather(45.307497,18.435747).enqueue(
             object: Callback<JsonObject>{
                 override fun onResponse(call: Call<JsonObject>, response: Response<JsonObject>) {
                     response.body().let {
@@ -95,8 +96,18 @@ class Home_fragment : Fragment() {
                         //dovrei mostrare la temperatura corrente ma siccome l'api non lo consente allora faccio la media
                         temperaturaattuale.text = ((high.asInt + low.asInt) / 2).toString()+"°"
                     }
+                    selectImageWeather((elemento as JsonObject)["text"].asString)
 
 
+                }
+
+                private fun selectImageWeather(tempo:String) {
+                    val image = binding.imageView
+                    when (tempo) {
+                        "Mostly Clear" -> image.setImageResource(R.drawable.day)
+                        "Mostly Sunny" -> image.setImageResource(R.drawable.day)
+                        "Mostly Cloudy" -> image.setImageResource(R.drawable.cloudy)
+                    }
                 }
 
                 override fun onFailure(call: Call<JsonObject>, t: Throwable) {
