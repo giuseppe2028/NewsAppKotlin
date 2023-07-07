@@ -1,13 +1,22 @@
 package com.example.newsappkotlin.View.Fragments
 
+import android.app.Activity
+import android.content.Context
+import android.content.pm.PackageManager
+import android.location.LocationManager
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
+import com.example.newsappkotlin.Manifest
 import com.example.newsappkotlin.R
 import com.example.newsappkotlin.View.Adapter.HomeNewsAdapter
 import com.example.newsappkotlin.View.Model.NewsSet
@@ -32,6 +41,7 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  */
 class Home_fragment : Fragment() {
+
     private lateinit var binding: FragmentHomeFragmentBinding
     // TODO: Rename and change types of parameters
     private var param1: String? = null
@@ -55,6 +65,7 @@ class Home_fragment : Fragment() {
         setRecyclerView()
         setCard()
         showElement()
+        checkPermissions()
         // Inflate the layout for this fragment
         return binding.root
     }
@@ -107,6 +118,7 @@ class Home_fragment : Fragment() {
                         "Mostly Clear" -> image.setImageResource(R.drawable.day)
                         "Mostly Sunny" -> image.setImageResource(R.drawable.day)
                         "Mostly Cloudy" -> image.setImageResource(R.drawable.cloudy)
+                        "Sunny" -> image.setImageResource(R.drawable.day)
                     }
                 }
 
@@ -195,4 +207,43 @@ class Home_fragment : Fragment() {
                 }
             }
     }
+
+
+    private fun checkPermission():Boolean{
+        if(ActivityCompat.checkSelfPermission(this.requireContext(),android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED ||
+            ActivityCompat.checkSelfPermission(this.requireContext(),android.Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED){
+            return true
+        }
+        return false
+    }
+
+    private fun RequestPermission(){
+        val PERMISSION_IF = 1000
+        ActivityCompat.requestPermissions(
+            this.requireActivity(),
+            arrayOf(android.Manifest.permission.ACCESS_COARSE_LOCATION,android.Manifest.permission.ACCESS_FINE_LOCATION),PERMISSION_IF,
+
+        )
+    }
+
+    private fun isLocationEnabled():Boolean{
+        var locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
+    }
+
+
+    fun checkPermissions(){
+        val requestPermission = registerForActivityResult(
+            ActivityResultContracts.RequestPermission()){
+                isGaranted:Boolean->
+            if(!isGaranted){
+                binding.apply{
+                    temperaturaattuale.visibility = View.GONE
+                    linearLayout2.visibility = View.GONE
+                    imageView.visibility = View.GONE
+                }
+            }
+        }
+    }
+
+//TODO finire di fare i permessi per stampare la località
 }
