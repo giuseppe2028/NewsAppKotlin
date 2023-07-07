@@ -1,6 +1,7 @@
 package com.example.newsappkotlin.View.Activities
 
 import android.app.Activity
+import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.newsappkotlin.R

@@ -41,6 +41,7 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  */
 class Home_fragment : Fragment() {
+    private  val PERMISSION_IF = 1000
 
     private lateinit var binding: FragmentHomeFragmentBinding
     // TODO: Rename and change types of parameters
@@ -218,7 +219,7 @@ class Home_fragment : Fragment() {
     }
 
     private fun RequestPermission(){
-        val PERMISSION_IF = 1000
+
         ActivityCompat.requestPermissions(
             this.requireActivity(),
             arrayOf(android.Manifest.permission.ACCESS_COARSE_LOCATION,android.Manifest.permission.ACCESS_FINE_LOCATION),PERMISSION_IF,
@@ -227,7 +228,16 @@ class Home_fragment : Fragment() {
     }
 
     private fun isLocationEnabled():Boolean{
-        var locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        var locationManager = activity?.getSystemService(Context.LOCATION_SERVICE) as LocationManager
+        return locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER) || locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER)
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        if(requestCode == )
     }
 
 
