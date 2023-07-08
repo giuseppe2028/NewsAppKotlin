@@ -2,10 +2,13 @@ package com.example.newsappkotlin.View.Fragments
 
 import android.app.Activity
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.location.Geocoder
 import android.location.LocationManager
 import android.location.LocationRequest
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -13,13 +16,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.annotation.RequiresApi
 import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
-import androidx.core.content.ContextCompat.getSystemService
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.newsappkotlin.R
 import com.example.newsappkotlin.View.Adapter.HomeNewsAdapter
+import com.example.newsappkotlin.View.Model.News
 import com.example.newsappkotlin.View.Model.NewsSet
 import com.example.newsappkotlin.View.Network.ClientNetwork
 import com.example.newsappkotlin.View.Network.ClientWeather
@@ -77,6 +80,7 @@ class Home_fragment : Fragment() {
         showElement()
         checkPermissions()
         getLastLocation()
+
         // Inflate the layout for this fragment
         return binding.root
     }
@@ -153,7 +157,13 @@ class Home_fragment : Fragment() {
                             Log.i("ciao","${item.urlToImage}")
                             Glide.with(requireContext()).load(item.urlToImage).into(topImageView)
                             newsTitle.text = item.title
+                            topImageView.setOnClickListener {
+                                //do implicit intent to URL profile
+                                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(item.url))
+                                startActivity(intent)
+                            }
                         }
+
                     }
                 }
                 override fun onFailure(call: Call<NewsSet>, t: Throwable) {
@@ -176,6 +186,16 @@ class Home_fragment : Fragment() {
                                 recyclerView.adapter = adapter
                                 adapter.lista = news.listaArticles
                                 recyclerView.layoutManager = LinearLayoutManager(requireContext())
+                                adapter.setOnClickListener(
+                                    object :
+                                HomeNewsAdapter.OnClickListener{
+                                        override fun Onclick(position: Int, item: News) {
+                                           val intent = Intent(Intent.ACTION_VIEW,Uri.parse(item.url))
+                                            startActivity(intent)
+                                        }
+
+                                }
+                                )
                             }
                         }
                 }
@@ -279,6 +299,9 @@ class Home_fragment : Fragment() {
                     if(location==null){
 
                     }else{
+                        Log.i("Debug","${location.latitude}")
+                        Log.i("Debug","${location.longitude}")
+
                         val geocoder = Geocoder(this.requireContext(), Locale.getDefault())
                         val addresses = geocoder.getFromLocation(location.latitude, location.longitude, 1)
 
@@ -297,5 +320,6 @@ class Home_fragment : Fragment() {
         }
 
     }
+
 //TODO finire di fare i permessi per stampare la località
 }

@@ -9,5 +9,7 @@ data class NewsSet (
     @SerializedName("status")
     val status:String,
     @SerializedName("totalResult")
-    val totalResult:Int
+    val totalResult:Int,
+    @SerializedName("url")
+    val url:String
         )

@@ -12,6 +12,13 @@ import com.example.newsappkotlin.View.Model.News
 import com.example.newsappkotlin.databinding.CardHomeBinding
 
 class HomeNewsAdapter(val context: Context):RecyclerView.Adapter<HomeNewsAdapter.ViewHolder>() {
+    private var setOnClickListener: OnClickListener? = null
+    interface OnClickListener{
+        fun Onclick(position: Int,item:News)
+    }
+    fun setOnClickListener(onClickListener: OnClickListener){
+        this.setOnClickListener = onClickListener
+    }
     var lista = ArrayList<News>()
     class ViewHolder(binding: CardHomeBinding): RecyclerView.ViewHolder(binding.root) {
         val imageNotizia = binding.imageView2
@@ -33,5 +40,8 @@ class HomeNewsAdapter(val context: Context):RecyclerView.Adapter<HomeNewsAdapter
         //setto l'immagine
         Glide.with(context).load(item.urlToImage).into(holder.imageNotizia)
         holder.title.text = item.title
+        holder.itemView.setOnClickListener {
+            setOnClickListener?.Onclick(position,item)
+        }
     }
 }
