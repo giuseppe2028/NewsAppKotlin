@@ -3,7 +3,9 @@ package com.example.newsappkotlin.View.Fragments
 import android.app.Activity
 import android.content.Context
 import android.content.pm.PackageManager
+import android.location.Geocoder
 import android.location.LocationManager
+import android.location.LocationRequest
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
@@ -16,18 +18,20 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.ContextCompat.getSystemService
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
-import com.example.newsappkotlin.Manifest
 import com.example.newsappkotlin.R
 import com.example.newsappkotlin.View.Adapter.HomeNewsAdapter
 import com.example.newsappkotlin.View.Model.NewsSet
 import com.example.newsappkotlin.View.Network.ClientNetwork
 import com.example.newsappkotlin.View.Network.ClientWeather
 import com.example.newsappkotlin.databinding.FragmentHomeFragmentBinding
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.util.Locale
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -47,6 +51,8 @@ class Home_fragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
+    lateinit var fusedLocationProviderClient: FusedLocationProviderClient
+    lateinit var locationRequest:LocationRequest
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,7 +60,10 @@ class Home_fragment : Fragment() {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
+        //inizializzo le variabili:
+        fusedLocationProviderClient =LocationServices.getFusedLocationProviderClient(this.requireContext())
     }
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -67,6 +76,7 @@ class Home_fragment : Fragment() {
         setCard()
         showElement()
         checkPermissions()
+        getLastLocation()
         // Inflate the layout for this fragment
         return binding.root
     }
@@ -237,7 +247,12 @@ class Home_fragment : Fragment() {
         permissions: Array<out String>,
         grantResults: IntArray
     ) {
-        if(requestCode == )
+        if(requestCode == PERMISSION_IF){
+            //usato solo per debug
+            if(grantResults.isNotEmpty() && grantResults[0]==PackageManager.PERMISSION_GRANTED){
+                Log.i("ciao","Hai i permessi")
+            }
+        }
     }
 
 
@@ -254,6 +269,33 @@ class Home_fragment : Fragment() {
             }
         }
     }
+//creo una funzione per accedere alla location:
+    private fun getLastLocation(){
+        //controlliamo i permessi:
+        if(checkPermission()){
+            if(isLocationEnabled()){
+                fusedLocationProviderClient.lastLocation.addOnCompleteListener { task->
+                    var location = task.result
+                    if(location==null){
 
+                    }else{
+                        val geocoder = Geocoder(this.requireContext(), Locale.getDefault())
+                        val addresses = geocoder.getFromLocation(location.latitude, location.longitude, 1)
+
+                        if (addresses != null) {
+                            if (addresses.isNotEmpty()) {
+                                val cityName = addresses[0].locality
+                                Log.i("prova",cityName)
+                                // Ora puoi utilizzare il nome della città (cityName) come desideri
+                            }
+                        }
+                    }
+                }
+            }
+        }else{
+            RequestPermission()
+        }
+
+    }
 //TODO finire di fare i permessi per stampare la località
 }
