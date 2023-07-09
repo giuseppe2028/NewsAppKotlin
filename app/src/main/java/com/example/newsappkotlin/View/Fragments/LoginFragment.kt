@@ -1,11 +1,14 @@
 package com.example.newsappkotlin.View.Fragments
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.newsappkotlin.databinding.FragmentLoginBinding
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.QuerySnapshot
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -18,6 +21,7 @@ private const val ARG_PARAM2 = "param2"
  * create an instance of this fragment.
  */
 class LoginFragment : Fragment() {
+    val firedatabase = FirebaseFirestore.getInstance()
     private lateinit var binding:FragmentLoginBinding
     // TODO: Rename and change types of parameters
     private var param1: String? = null
@@ -37,8 +41,7 @@ class LoginFragment : Fragment() {
     ): View? {
         binding = FragmentLoginBinding.inflate(layoutInflater)
         // Inflate the layout for this fragment
-        loginManager()
-
+        clickManager()
 
 
         return binding.root
@@ -65,25 +68,41 @@ class LoginFragment : Fragment() {
             }
     }
 
-    private fun loginManager(){
-        val mailText:String
-        val passwordText:String
-        binding.apply {
-            mailText = mail.text.toString()
-            passwordText = password.text.toString()
-        }
-        clickManager(mailText,passwordText)
-    }
 
-    private fun clickManager(mail:String, password:String) {
-        binding.bottoneLogin.apply {
-            setOnClickListener {
-                checkValues(mail,password)
+
+
+
+    private fun clickManager() {
+        binding.apply {
+            bottoneLogin.setOnClickListener {
+                val mailText = mail.text.toString()
+                val passwordText = password.text.toString()
+                checkValues(mailText,passwordText)
             }
         }
     }
 
     private fun checkValues(mail: String, password: String) {
+        Log.i("Query", "$mail $password")
 
+        firedatabase.collection("User")
+            .whereEqualTo("mail", mail)
+            .whereEqualTo("password", password)
+            .get()
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful()) {
+                    val querySnapshot = task.getResult()
+                    if (!querySnapshot.isEmpty()) {
+                        Log.i("Query", "utente loggato")
+                    }
+                else {
+                    Log.i("Query", "utente non loggato")
+                    }
+                }
+            else {
+                // Si è verificato un errore durante l'esecuzione della query
+                // Gestisci l'errore o visualizza un messaggio di errore appropriato
+            }
+            }
     }
 }

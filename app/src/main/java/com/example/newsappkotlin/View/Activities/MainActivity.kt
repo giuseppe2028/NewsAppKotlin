@@ -24,7 +24,6 @@ class MainActivity : AppCompatActivity() {
         val selectItem = binding.navigationBar.selectedItemId
         when(selectItem){
             R.id.news -> transaction.replace(binding.fragmentContainerHome.id,Home_fragment())
-
         }
     }
 }
