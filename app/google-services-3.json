@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "184632742918",
+    "project_id": "newapp-fc2c5",
+    "storage_bucket": "newapp-fc2c5.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:184632742918:android:16a0674beb192536855f87",
+        "android_client_info": {
+          "package_name": "com.example.newsappkotlin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "184632742918-4fl02r6m6fa8a640cqi0d461h9ntibpj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCLXXd6FLeZ2fvJG3xKBb_s5oZ03ORAA5w"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "184632742918-4fl02r6m6fa8a640cqi0d461h9ntibpj.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
