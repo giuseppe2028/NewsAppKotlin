@@ -1,11 +1,14 @@
 package com.example.newsappkotlin.View.Fragments
 
+import android.content.Intent
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.example.newsappkotlin.View.Activities.MainActivity
+import com.example.newsappkotlin.View.Model.User
 import com.example.newsappkotlin.databinding.FragmentLoginBinding
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.QuerySnapshot
@@ -93,7 +96,7 @@ class LoginFragment : Fragment() {
                 if (task.isSuccessful()) {
                     val querySnapshot = task.getResult()
                     if (!querySnapshot.isEmpty()) {
-                        Log.i("Query", "utente loggato")
+                        acceptLogin(querySnapshot,mail)
                     }
                 else {
                     Log.i("Query", "utente non loggato")
@@ -104,5 +107,18 @@ class LoginFragment : Fragment() {
                 // Gestisci l'errore o visualizza un messaggio di errore appropriato
             }
             }
+    }
+    private fun acceptLogin(querySnapshot: QuerySnapshot,mail:String) {
+        for (document in querySnapshot.documents) {
+            val userId = document.id
+            User.setInformation(userId,mail)
+            changeScreen()
+        }
+
+    }
+
+    private fun changeScreen() {
+        val i = Intent(this.context,MainActivity::class.java)
+        startActivity(i)
     }
 }
