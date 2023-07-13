@@ -17,5 +17,10 @@
     <string name="enterPassword">Enter your password</string>
     <string name="login">Login</string>
     <string name="notaccont">Non hai un account?</string>
-    <string name="signup">Registrati</string>
+    <string name="signup"><u>Registrati</u></string>
+    <string name="InsNome">Inserisci il tuo nome</string>
+    <string name="InsCognome">Inserisci il tuo cognome</string>
+    <string name="InsPass">Inserisci una password</string>
+    <string name="InsMail">Inserisci una mail</string>
+    <string name="InsNumCell">Inserisci un numero di telefono valido</string>
 </resources>

@@ -63,12 +63,14 @@
             android:text="@string/notaccont" />
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/registrati"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:layout_marginLeft="10dp"
+            android:clickable="true"
             android:text="@string/signup"
             android:textAllCaps="false"
+            android:textColor="@color/colorTextCliccable"
             android:textStyle="italic" />
 
     </LinearLayout>

@@ -3,4 +3,5 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="colorsBackgroundHome">#8DBBF8</color>
+    <color name="colorTextCliccable">#2B84FA</color>
 </resources>
