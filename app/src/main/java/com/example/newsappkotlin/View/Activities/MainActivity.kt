@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import com.example.newsappkotlin.R
 import com.example.newsappkotlin.View.Fragments.Home_fragment
 import com.example.newsappkotlin.databinding.ActivityMainBinding
@@ -23,7 +24,15 @@ class MainActivity : AppCompatActivity() {
         val transaction = manager.beginTransaction()
         val selectItem = binding.navigationBar.selectedItemId
         when(selectItem){
-            R.id.news -> transaction.replace(binding.fragmentContainerHome.id,Home_fragment())
+            R.id.news -> {
+
+                transaction.replace(binding.fragmentContainerHome.id,Home_fragment())
+            }
         }
     }
+
+    override fun onBackPressed() {
+        Log.i("debug","niente")
+    }
+
 }

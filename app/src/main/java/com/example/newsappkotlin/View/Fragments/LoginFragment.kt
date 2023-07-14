@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.example.newsappkotlin.R
 import com.example.newsappkotlin.View.Activities.MainActivity
 import com.example.newsappkotlin.View.Model.User
 import com.example.newsappkotlin.databinding.FragmentLoginBinding
@@ -82,6 +83,9 @@ class LoginFragment : Fragment() {
                 val passwordText = password.text.toString()
                 checkValues(mailText,passwordText)
             }
+            registrati.setOnClickListener {
+                registrati()
+            }
         }
     }
 
@@ -120,5 +124,12 @@ class LoginFragment : Fragment() {
     private fun changeScreen() {
         val i = Intent(this.context,MainActivity::class.java)
         startActivity(i)
+    }
+    fun registrati(){
+
+            val manager = parentFragmentManager
+            val transaction = manager.beginTransaction()
+            transaction.replace(R.id.fragmentContainerView,RegisterFragment()).commit()
+
     }
 }

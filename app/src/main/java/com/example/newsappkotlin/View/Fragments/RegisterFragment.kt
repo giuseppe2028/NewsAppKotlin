@@ -1,11 +1,15 @@
 package com.example.newsappkotlin.View.Fragments
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.example.newsappkotlin.R
+import com.example.newsappkotlin.View.Activities.MainActivity
+import com.example.newsappkotlin.View.DI.Controller.FirebaseController
+import com.example.newsappkotlin.View.DI.model.UserRegister
 import com.example.newsappkotlin.databinding.FragmentRegisterBinding
 
 // TODO: Rename parameter arguments, choose names that match
@@ -31,14 +35,36 @@ class RegisterFragment : Fragment() {
             param2 = it.getString(ARG_PARAM2)
         }
     }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View{
         binding = FragmentRegisterBinding.inflate(layoutInflater)
+        binding.registrati.setOnClickListener {
+            checkFields()
+        }
         // Inflate the layout for this fragment
         return binding.root
+    }
+
+    private fun checkFields() {
+        binding.apply {
+            val user = UserRegister(
+                Nome.text.toString(),
+                Cognome.text.toString(),
+                Mail.text.toString(),
+                Password.text.toString(),
+                NumTelefono.text.toString().toLong()
+            )
+            FirebaseController.register(user)
+            navToHome()
+        }
+        //TODO("Not yet implemented")
+    }
+
+    private fun navToHome() {
+        val i = Intent(this.context,MainActivity::class.java)
+        startActivity(i)
     }
 
     companion object {
@@ -60,4 +86,5 @@ class RegisterFragment : Fragment() {
                 }
             }
     }
+
 }
