@@ -27,8 +27,7 @@ import com.example.newsappkotlin.View.Model.NewsSet
 import com.example.newsappkotlin.View.Network.ClientNetwork
 import com.example.newsappkotlin.View.Network.ClientWeather
 import com.example.newsappkotlin.databinding.FragmentHomeFragmentBinding
-import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationServices
+
 import com.google.gson.JsonArray
 import com.google.gson.JsonObject
 import retrofit2.Call
@@ -36,7 +35,6 @@ import retrofit2.Callback
 import retrofit2.Response
 import java.util.Locale
 
-// TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
@@ -51,10 +49,8 @@ class Home_fragment : Fragment() {
     private  val PERMISSION_IF = 1000
 
     private lateinit var binding: FragmentHomeFragmentBinding
-    // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
-    lateinit var fusedLocationProviderClient: FusedLocationProviderClient
     lateinit var locationRequest:LocationRequest
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -64,7 +60,6 @@ class Home_fragment : Fragment() {
             param2 = it.getString(ARG_PARAM2)
         }
         //inizializzo le variabili:
-        fusedLocationProviderClient =LocationServices.getFusedLocationProviderClient(this.requireContext())
     }
 
 
@@ -79,7 +74,6 @@ class Home_fragment : Fragment() {
         setCard()
         showElement()
         checkPermissions()
-        getLastLocation()
 
         // Inflate the layout for this fragment
         return binding.root
@@ -138,7 +132,6 @@ class Home_fragment : Fragment() {
                 }
 
                 override fun onFailure(call: Call<JsonObject>, t: Throwable) {
-                    TODO("Not yet implemented")
                 }
 
 
@@ -228,7 +221,6 @@ class Home_fragment : Fragment() {
          * @param param2 Parameter 2.
          * @return A new instance of fragment Home_fragment.
          */
-        // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
             Home_fragment().apply {
@@ -289,37 +281,5 @@ class Home_fragment : Fragment() {
             }
         }
     }
-//creo una funzione per accedere alla location:
-    private fun getLastLocation(){
-        //controlliamo i permessi:
-        if(checkPermission()){
-            if(isLocationEnabled()){
-                fusedLocationProviderClient.lastLocation.addOnCompleteListener { task->
-                    var location = task.result
-                    if(location==null){
-
-                    }else{
-                        Log.i("Debug","${location.latitude}")
-                        Log.i("Debug","${location.longitude}")
-
-                        val geocoder = Geocoder(this.requireContext(), Locale.getDefault())
-                        val addresses = geocoder.getFromLocation(location.latitude, location.longitude, 1)
-
-                        if (addresses != null) {
-                            if (addresses.isNotEmpty()) {
-                                val cityName = addresses[0].locality
-                                Log.i("prova",cityName)
-                                // Ora puoi utilizzare il nome della città (cityName) come desideri
-                            }
-                        }
-                    }
-                }
-            }
-        }else{
-            RequestPermission()
-        }
-
-    }
-
 //TODO finire di fare i permessi per stampare la località
 }

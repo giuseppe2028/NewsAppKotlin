@@ -38,7 +38,7 @@ android {
 }
 
 dependencies {
-    implementation 'com.google.firebase:firebase-firestore:23.0.0'
+    implementation 'com.google.firebase:firebase-firestore:23.0.0' // Assicurati di utilizzare l'ultima versione disponibile
     implementation( platform ("com.google.firebase:firebase-bom:32.1.1"))
     implementation("com.google.firebase:firebase-analytics-ktx")
 

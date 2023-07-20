@@ -24,4 +24,5 @@
     <string name="InsMail">Inserisci una mail</string>
     <string name="InsNumCell">Inserisci un numero di telefono valido</string>
     <string name="signupNoU">Registrati</string>
+    <string name="ErrorMailorPass">Mail o password errati, ritenta</string>
 </resources>
