@@ -11,6 +11,8 @@ import com.example.newsappkotlin.View.Fragments.Home_fragment
 import com.example.newsappkotlin.View.Model.News
 import com.example.newsappkotlin.databinding.CardHomeBinding
 
+//TODO: fare quando clicco sul pulsante like,  cambio direttamente lo stato del mio bottone; successivamente salvo  l'url della pagina nella tabella like di firebase.
+//TODO quando richiedo le notizie, richiedo pure quelle preferite nel database e le confronto; se gli url sono uguali allora setto il cuore direttamente su rosso
 class HomeNewsAdapter(val context: Context):RecyclerView.Adapter<HomeNewsAdapter.ViewHolder>() {
     private var setOnClickListener: OnClickListener? = null
     interface OnClickListener{
@@ -20,6 +22,7 @@ class HomeNewsAdapter(val context: Context):RecyclerView.Adapter<HomeNewsAdapter
     fun setOnClickListener(onClickListener: OnClickListener){
         this.setOnClickListener = onClickListener
     }
+    //it's useful to setLike button
     var lista = ArrayList<News>()
     class ViewHolder(binding: CardHomeBinding): RecyclerView.ViewHolder(binding.root) {
         val imageNotizia = binding.imageView2
@@ -47,10 +50,8 @@ class HomeNewsAdapter(val context: Context):RecyclerView.Adapter<HomeNewsAdapter
         }
         holder.bottoneLike.setOnClickListener {
             setOnClickListener?.OnclickLike(position,item)
-            val imageOfButton = holder.bottoneLike.drawable
             //faccio l'interrogazione al DB per settare l'immagine
 
-            holder.bottoneLike.setImageResource(R.drawable.heart_filled)
         }
 
     }
