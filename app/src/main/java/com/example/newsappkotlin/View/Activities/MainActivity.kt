@@ -7,6 +7,7 @@ import android.os.Bundle
 import android.util.Log
 import com.example.newsappkotlin.R
 import com.example.newsappkotlin.View.Fragments.Home_fragment
+import com.example.newsappkotlin.View.Fragments.LikeFragment
 import com.example.newsappkotlin.databinding.ActivityMainBinding
 
 
@@ -24,10 +25,10 @@ class MainActivity : AppCompatActivity() {
         val transaction = manager.beginTransaction()
         val selectItem = binding.navigationBar.selectedItemId
         when(selectItem){
-            R.id.news -> {
-
+            R.id.news ->
                 transaction.replace(binding.fragmentContainerHome.id,Home_fragment())
-            }
+
+            R.id.heart -> transaction.replace(binding.fragmentContainerHome.id,LikeFragment())
         }
     }
 

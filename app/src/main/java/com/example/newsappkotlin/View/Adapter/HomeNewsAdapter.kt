@@ -15,6 +15,7 @@ class HomeNewsAdapter(val context: Context):RecyclerView.Adapter<HomeNewsAdapter
     private var setOnClickListener: OnClickListener? = null
     interface OnClickListener{
         fun Onclick(position: Int,item:News)
+        fun OnclickLike(position: Int,item: News)
     }
     fun setOnClickListener(onClickListener: OnClickListener){
         this.setOnClickListener = onClickListener
@@ -23,6 +24,7 @@ class HomeNewsAdapter(val context: Context):RecyclerView.Adapter<HomeNewsAdapter
     class ViewHolder(binding: CardHomeBinding): RecyclerView.ViewHolder(binding.root) {
         val imageNotizia = binding.imageView2
         val title = binding.title
+        val bottoneLike = binding.likeButton
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -43,5 +45,13 @@ class HomeNewsAdapter(val context: Context):RecyclerView.Adapter<HomeNewsAdapter
         holder.itemView.setOnClickListener {
             setOnClickListener?.Onclick(position,item)
         }
+        holder.bottoneLike.setOnClickListener {
+            setOnClickListener?.OnclickLike(position,item)
+            val imageOfButton = holder.bottoneLike.drawable
+            //faccio l'interrogazione al DB per settare l'immagine
+
+            holder.bottoneLike.setImageResource(R.drawable.heart_filled)
+        }
+
     }
 }

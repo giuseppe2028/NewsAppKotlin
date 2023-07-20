@@ -155,6 +155,7 @@ class Home_fragment : Fragment() {
                                 val intent = Intent(Intent.ACTION_VIEW, Uri.parse(item.url))
                                 startActivity(intent)
                             }
+
                         }
 
                     }
@@ -187,8 +188,16 @@ class Home_fragment : Fragment() {
                                             startActivity(intent)
                                         }
 
-                                }
+                                        override fun OnclickLike(position: Int, item: News) {
+                                            binding.apply {
+                                                //TODO Inserire all'interno del database
+                                            }
+                                        }
+
+                                    }
                                 )
+
+
                             }
                         }
                 }
@@ -199,6 +208,8 @@ class Home_fragment : Fragment() {
             }
         )
     }
+
+
 
     private fun showElement() {
         binding.apply {
