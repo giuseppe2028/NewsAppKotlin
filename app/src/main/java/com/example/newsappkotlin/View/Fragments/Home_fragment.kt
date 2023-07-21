@@ -22,8 +22,11 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.newsappkotlin.R
 import com.example.newsappkotlin.View.Adapter.HomeNewsAdapter
+import com.example.newsappkotlin.View.DI.Controller.FirebaseController
+import com.example.newsappkotlin.View.DI.model.LikedNews
 import com.example.newsappkotlin.View.Model.News
 import com.example.newsappkotlin.View.Model.NewsSet
+import com.example.newsappkotlin.View.Model.User
 import com.example.newsappkotlin.View.Network.ClientNetwork
 import com.example.newsappkotlin.View.Network.ClientWeather
 import com.example.newsappkotlin.databinding.FragmentHomeFragmentBinding
@@ -189,9 +192,14 @@ class Home_fragment : Fragment() {
                                         }
 
                                         override fun OnclickLike(position: Int, item: News) {
-                                            binding.apply {
-                                                //TODO Inserire all'interno del database
+                                            if(adapter.like){
+                                                FirebaseController.removeLike(item.url,User.id)
+
+                                            }else{
+                                                FirebaseController.addLike(LikedNews(item.url,item.urlToImage,item.title,User.id))
+
                                             }
+
                                         }
 
                                     }
