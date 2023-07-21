@@ -5,6 +5,7 @@ import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import androidx.fragment.app.Fragment
 import com.example.newsappkotlin.R
 import com.example.newsappkotlin.View.Fragments.Home_fragment
 import com.example.newsappkotlin.View.Fragments.LikeFragment
@@ -21,15 +22,26 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun navSelector(){
+
+
+         binding.navigationBar.setOnItemSelectedListener {
+
+            selectItem->
+            when(selectItem.itemId){
+                R.id.news -> sostituisciFragment(Home_fragment())
+                R.id.heart -> sostituisciFragment(LikeFragment())
+                else -> {
+                    true
+                }
+            }
+        }
+
+    }
+    private fun sostituisciFragment(fragment:Fragment):Boolean{
         val manager = supportFragmentManager
         val transaction = manager.beginTransaction()
-        val selectItem = binding.navigationBar.selectedItemId
-        when(selectItem){
-            R.id.news ->
-                transaction.replace(binding.fragmentContainerHome.id,Home_fragment())
-
-            R.id.heart -> transaction.replace(binding.fragmentContainerHome.id,LikeFragment())
-        }
+        transaction.replace(binding.fragmentContainerHome.id,fragment).commit()
+        return true
     }
 
     override fun onBackPressed() {
