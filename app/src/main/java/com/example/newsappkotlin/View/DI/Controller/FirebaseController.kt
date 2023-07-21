@@ -38,10 +38,12 @@ object FirebaseController {
     }
     fun removeLike(user:String,url:String){
         val document = db.collection("Like")
-        val query = document.whereEqualTo("url",url).whereEqualTo("user",user)
+        val query = document.whereEqualTo("url",url).whereEqualTo("utente",user)
+        Log.i("ciao","sonoquiii")
         query.get()
             .addOnSuccessListener { querySnapshot ->
                 for (documentSnapshot in querySnapshot) {
+
                     // Delete each document that matches the condition
                     documentSnapshot.reference.delete()
                         .addOnSuccessListener {

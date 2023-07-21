@@ -193,7 +193,7 @@ class Home_fragment : Fragment() {
 
                                         override fun OnclickLike(position: Int, item: News) {
                                             if(adapter.like){
-                                                FirebaseController.removeLike(item.url,User.id)
+                                                FirebaseController.removeLike(User.id,item.url)
 
                                             }else{
                                                 FirebaseController.addLike(LikedNews(item.url,item.urlToImage,item.title,User.id))
