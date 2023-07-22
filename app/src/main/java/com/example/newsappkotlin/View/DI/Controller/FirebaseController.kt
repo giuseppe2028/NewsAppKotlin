@@ -36,7 +36,7 @@ object FirebaseController {
 
 
     }
-    fun removeLike(user:String,url:String){
+     fun removeLike(user:String,url:String){
         val document = db.collection("Like")
         val query = document.whereEqualTo("url",url).whereEqualTo("utente",user)
         Log.i("ciao","sonoquiii")
@@ -59,20 +59,21 @@ object FirebaseController {
             }
     }
 
-    fun getNewsLiked():List<LikedNews>{
-         var lista:ArrayList<LikedNews> = ArrayList()
-        lista.add(LikedNews("ciao","ciao","ciao","ciao"))
+    fun getNewsLiked(callback: (ArrayList<LikedNews>) -> Unit) {
+        val lista: ArrayList<LikedNews> = ArrayList()
         val document = db.collection("Like")
-        document.get().addOnSuccessListener{
-            for(document in it){
-                val url = document.data.get("url").toString()
-                val urlImage = document.data.get("urlImage").toString()
-                val utente = document.data.get("utente").toString()
-                val titolo = document.data.get("title").toString()
-                lista.add(LikedNews(url,urlImage,titolo,utente))
+        document.get().addOnSuccessListener { querySnapshot ->
+            for (documento in querySnapshot) {
+                val url = documento.getString("url").toString()
+                val urlImage = documento.getString("urlImage").toString()
+                val utente = documento.getString("utente").toString()
+                val titolo = documento.getString("title").toString()
+                lista.add(LikedNews(url, urlImage, titolo, utente))
             }
+            // Call the callback with the populated list when data retrieval is complete
+            callback(lista)
         }
-        return lista
     }
+
 
 }

@@ -6,7 +6,9 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.newsappkotlin.R
+import com.example.newsappkotlin.View.Adapter.LikedNewsAdapter
 import com.example.newsappkotlin.View.DI.Controller.FirebaseController
 import com.example.newsappkotlin.View.DI.model.LikedNews
 import com.example.newsappkotlin.databinding.FragmentLikeBinding
@@ -40,16 +42,21 @@ class LikeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
         binding = FragmentLikeBinding.inflate(layoutInflater)
-        val listaLike = richiestaLista()
-        Log.i("proca","sono")
+        val adapter = LikedNewsAdapter(requireContext())
+        FirebaseController.getNewsLiked {
+            lista ->
+            adapter.listaNews = lista
+            binding.apply {
+                recyclerView.adapter = adapter
+                recyclerView.layoutManager = LinearLayoutManager(requireContext())
+            }
+        }
+
         // Inflate the layout for this fragment
         return binding.root
     }
 //requestDatabase
-    fun richiestaLista():List<LikedNews> {
-        //faccio la richiesta:
-        return FirebaseController.getNewsLiked()
-    }
+
 
     companion object {
         /**
