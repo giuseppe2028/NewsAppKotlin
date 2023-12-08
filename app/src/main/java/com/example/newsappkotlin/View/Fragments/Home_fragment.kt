@@ -156,7 +156,7 @@ class Home_fragment : Fragment() {
                                 newsTitle.text = item.title
                                 topImageView.setOnClickListener {
                                     //do implicit intent to URL profile
-                                    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(i.url))
+                                    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(item.url))
                                     startActivity(intent)
                                 }
                             }

@@ -41,7 +41,7 @@ dependencies {
     implementation 'com.google.firebase:firebase-firestore:23.0.0' // Assicurati di utilizzare l'ultima versione disponibile
     implementation( platform ("com.google.firebase:firebase-bom:32.1.1"))
     implementation("com.google.firebase:firebase-analytics-ktx")
-
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
     implementation 'androidx.core:core-ktx:1.8.0'
     implementation 'androidx.appcompat:appcompat:1.6.1'
     implementation 'com.google.android.material:material:1.5.0'
