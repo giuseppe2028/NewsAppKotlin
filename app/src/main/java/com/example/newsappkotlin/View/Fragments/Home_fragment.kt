@@ -143,26 +143,30 @@ class Home_fragment : Fragment() {
     }
 
     private fun setCard() {
-        ClientNetwork.retrofit.getHeadNews("us").enqueue(
+        ClientNetwork.retrofit.getHeadNews("it").enqueue(
             object: Callback<NewsSet>{
                 override fun onResponse(call: Call<NewsSet>, response: Response<NewsSet>) {
                     val news = response.body()
                     if(news!=null){
                         binding.apply {
-                            val item = news.listaArticles[0]
-                            Log.i("ciao","${item.urlToImage}")
-                            Glide.with(requireContext()).load(item.urlToImage).into(topImageView)
-                            newsTitle.text = item.title
-                            topImageView.setOnClickListener {
-                                //do implicit intent to URL profile
-                                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(item.url))
-                                startActivity(intent)
+                                val item = news.listaArticles[0]
+
+                                Log.i("ciao","${item.urlToImage}")
+                                Glide.with(requireContext()).load(item.urlToImage).into(topImageView)
+                                newsTitle.text = item.title
+                                topImageView.setOnClickListener {
+                                    //do implicit intent to URL profile
+                                    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(i.url))
+                                    startActivity(intent)
+                                }
                             }
+
+
 
                         }
 
                     }
-                }
+
                 override fun onFailure(call: Call<NewsSet>, t: Throwable) {
                 }
 
@@ -172,7 +176,8 @@ class Home_fragment : Fragment() {
 
     private fun setRecyclerView() {
         //make http request:
-        val news = ClientNetwork.retrofit.getAllNews("apple")
+        val news = ClientNetwork.retrofit.getAllNews("tesla")
+        Log.i("prova2123","sono qui")
         news.enqueue(
             object:Callback<NewsSet>{
                 override fun onResponse(call: Call<NewsSet>, response: Response<NewsSet>) {
@@ -181,7 +186,7 @@ class Home_fragment : Fragment() {
                             binding.apply {
                                 val adapter  = HomeNewsAdapter(requireContext())
                                 recyclerView.adapter = adapter
-                                Log.i("debug", "dimensioneLista = ${news.listaArticles.size }")
+                                Log.i("debug3", "dimensioneLista = ${news.listaArticles.size }")
                                 adapter.lista = news.listaArticles
                                 recyclerView.layoutManager = LinearLayoutManager(requireContext())
                                 adapter.setOnClickListener(
@@ -214,7 +219,7 @@ class Home_fragment : Fragment() {
                         }
                 }
                 override fun onFailure(call: Call<NewsSet>, t: Throwable) {
-                    Log.i("ciao","ciao2")
+                    Log.i("ciao3","ciao2")
                 }
 
             }
