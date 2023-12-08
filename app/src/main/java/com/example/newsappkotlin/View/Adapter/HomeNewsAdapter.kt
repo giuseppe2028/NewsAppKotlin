@@ -1,6 +1,7 @@
 package com.example.newsappkotlin.View.Adapter
 
 import android.content.Context
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -42,6 +43,7 @@ class HomeNewsAdapter(val context: Context):RecyclerView.Adapter<HomeNewsAdapter
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val item = lista[position]
+
 
         //setto l'immagine
         Glide.with(context).load(item.urlToImage).into(holder.imageNotizia)

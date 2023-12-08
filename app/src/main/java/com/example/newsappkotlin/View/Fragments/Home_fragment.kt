@@ -181,6 +181,7 @@ class Home_fragment : Fragment() {
                             binding.apply {
                                 val adapter  = HomeNewsAdapter(requireContext())
                                 recyclerView.adapter = adapter
+                                Log.i("debug", "dimensioneLista = ${news.listaArticles.size }")
                                 adapter.lista = news.listaArticles
                                 recyclerView.layoutManager = LinearLayoutManager(requireContext())
                                 adapter.setOnClickListener(
@@ -207,6 +208,9 @@ class Home_fragment : Fragment() {
 
 
                             }
+                        }
+                    else{
+
                         }
                 }
                 override fun onFailure(call: Call<NewsSet>, t: Throwable) {

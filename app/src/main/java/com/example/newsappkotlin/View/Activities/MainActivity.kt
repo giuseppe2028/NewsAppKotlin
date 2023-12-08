@@ -19,10 +19,17 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         navSelector()
+        clickButtons()
     }
 
-    private fun navSelector(){
+    private fun clickButtons() {
+        binding.apply {
 
+        }
+    }
+
+
+    private fun navSelector(){
 
          binding.navigationBar.setOnItemSelectedListener {
 
