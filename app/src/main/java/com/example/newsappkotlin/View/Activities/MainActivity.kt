@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import com.example.newsappkotlin.R
 import com.example.newsappkotlin.View.Fragments.Home_fragment
 import com.example.newsappkotlin.View.Fragments.LikeFragment
+import com.example.newsappkotlin.View.Fragments.ProfileFragment
 import com.example.newsappkotlin.databinding.ActivityMainBinding
 
 
@@ -37,6 +38,7 @@ class MainActivity : AppCompatActivity() {
             when(selectItem.itemId){
                 R.id.news -> sostituisciFragment(Home_fragment())
                 R.id.heart -> sostituisciFragment(LikeFragment())
+                R.id.profile -> sostituisciFragment(ProfileFragment())
                 else -> {
                     true
                 }
