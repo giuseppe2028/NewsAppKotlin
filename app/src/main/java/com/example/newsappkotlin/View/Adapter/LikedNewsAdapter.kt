@@ -11,10 +11,15 @@ import com.example.newsappkotlin.View.DI.model.LikedNews
 import com.example.newsappkotlin.databinding.CardLikedNewsBinding
 
 class LikedNewsAdapter(val context: Context):RecyclerView.Adapter<LikedNewsAdapter.ViewHolder>(){
+    private var onClickListener:OnClickListener? = null
+    interface OnClickListener{
+        fun onClick(position: Int,likedNews: LikedNews)
+    }
     var listaNews = ArrayList<LikedNews>()
     class ViewHolder(binding:CardLikedNewsBinding):RecyclerView.ViewHolder(binding.root){
         val titolo = binding.title
         val immagine = binding.immagine
+        val cestino = binding.cestino
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -31,6 +36,11 @@ class LikedNewsAdapter(val context: Context):RecyclerView.Adapter<LikedNewsAdapt
 
         holder.titolo.text = item.title
         Glide.with(context).load(item.urlImage).into(holder.immagine)
+        holder.cestino.setOnClickListener {
+            onClickListener?.onClick(position,item)
+        }
     }
-
+    fun setOnClickListener(onClickListener:OnClickListener){
+        this.onClickListener = onClickListener
+    }
 }
